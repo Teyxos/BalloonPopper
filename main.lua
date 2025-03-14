@@ -74,6 +74,7 @@ function love.load()
     Score = 0
     Menu = true
     Run = true
+    Time = 0
 
     MenuBackground = love.graphics.newImage("assets/imgs/menuBackground.png")
     GameBackground = love.graphics.newImage("assets/imgs/gameBackground.jpg")
@@ -93,10 +94,13 @@ end
 
 function love.update(dt) 
 
-    if love.timer.getTime() > 25 then
-        Run = false
+    if Run and (not Menu) then
+        Time = Time + dt
     end
 
+    if Time > 25 then
+        Run = false
+    end
     if not Run then
         StartMusic:stop()
         FinalMusic:play()
@@ -131,7 +135,7 @@ end
 -- TODO: Make animation reset with ballon respawn also make so that the balloon is not clickable after it has been popped also 
 
 function love.mousepressed(x, y, button, istouch) 
-    if button == 1 then 
+    if button == 1  and Run then 
         for _, balloon in pairs(Balloons) do
             local mouseToTarget = DistanceBetween(x, y, balloon.x, balloon.y)
             if mouseToTarget < balloon.radius then

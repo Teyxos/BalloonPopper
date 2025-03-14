@@ -11,7 +11,7 @@ function P.draw()
     love.graphics.setColor(1,1,1)
     
     love.graphics.print(Score, 0, 0)
-    local text = string.format("Time: %2.2f", 25 - love.timer.getTime())
+    local text = string.format("Time: %2.2f", 25 - Time)
     love.graphics.print(text, 0, 40)
 end
 
