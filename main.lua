@@ -107,8 +107,10 @@ function love.update(dt)
     end
 
     for _, balloon in pairs(Balloons) do
-        balloon.x = balloon.x + math.random(-balloon.speed * dt * 10, balloon.speed * dt * 10)
-        balloon.y = (balloon.y - balloon.speed * dt)
+        if Run and not Menu then
+            balloon.x = balloon.x + math.random(-balloon.speed * dt * 10, balloon.speed * dt * 10)
+            balloon.y = (balloon.y - balloon.speed * dt)
+        end
 
         if balloon.animation == balloon.animations.popped and balloon.animation.position == 3 then
             balloon.animation:gotoFrame(1)
@@ -138,7 +140,7 @@ function love.mousepressed(x, y, button, istouch)
     if button == 1  and Run then 
         for _, balloon in pairs(Balloons) do
             local mouseToTarget = DistanceBetween(x, y, balloon.x, balloon.y)
-            if mouseToTarget < balloon.radius then
+            if mouseToTarget < balloon.radius and Run then
                 balloon.animation = balloon.animations.popped
                 Pop_SFX:play()
 
